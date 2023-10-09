@@ -2,6 +2,11 @@
 # renovate: datasource=github-releases depName=lxc/incus extractVersion=(incus-)?(?<version>.+)
 INCUS_VERSION = "0.1"
 
+# see https://linuxcontainers.org/incus/docs/main/reference/storage_drivers/#storage-drivers
+# see https://linuxcontainers.org/incus/docs/main/reference/storage_btrfs/
+# see https://linuxcontainers.org/incus/docs/main/reference/storage_zfs/
+STORAGE_DRIVER = "btrfs" # or zfs.
+
 VM_CPUS       = 4
 VM_MEMORY_MB  = 4*1024
 
@@ -22,6 +27,6 @@ Vagrant.configure("2") do |config|
       config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_version: "4.2", nfs_udp: false
     end
     config.vm.provision "shell", path: "provision-base.sh"
-    config.vm.provision "shell", path: "provision-incus.sh", args: [INCUS_VERSION]
+    config.vm.provision "shell", path: "provision-incus.sh", args: [INCUS_VERSION, STORAGE_DRIVER]
   end
 end

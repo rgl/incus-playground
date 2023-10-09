@@ -4,7 +4,36 @@ set -euxo pipefail
 # see https://github.com/lxc/incus/releases
 incus_version="${1:-0.1}"
 
+storage_driver="${2:-btrfs}"
+
 storage_device='/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_incus'
+
+# install the storage dependencies.
+if [ "$storage_driver" == "btrfs" ]; then
+  # see https://wiki.debian.org/Btrfs
+  apt-get install -y btrfs-progs
+elif [ "$storage_driver" == "zfs" ]; then
+  # see https://wiki.debian.org/ZFS
+  # enable the contrib apt repository section.
+  sed -i -E 's,^(deb(-src)? .+),\1 contrib,g' /etc/apt/sources.list
+  apt-get update
+  # configure the system to accept the zfs incompatible licenses.
+  # these anwsers were obtained (after installing zfs-dkms) with:
+  #   #sudo debconf-show zfs-dkms
+  #   sudo apt-get install debconf-utils
+  #   # this way you can see the comments:
+  #   sudo debconf-get-selections
+  #   # this way you can just see the values needed for debconf-set-selections:
+  #   sudo debconf-get-selections | grep -E '^zfs-dkms\s+' | sort
+  debconf-set-selections <<EOF
+zfs-dkms zfs-dkms/note-incompatible-licenses note
+EOF
+  apt-get install -y linux-headers-amd64 zfs-dkms zfsutils-linux
+  modprobe zfs
+else
+  echo "unsupported storage driver: $storage_driver"
+  exit 1
+fi
 
 # install.
 # see https://github.com/zabbly/incus#stable-repository
@@ -65,19 +94,30 @@ apt-get install -y "incus=$incus_package_version"
 # kick the tires.
 incus version
 
-# install the btrfs storage dependencies.
-apt-get install -y btrfs-progs
-
 # configure.
 # see https://linuxcontainers.org/incus/docs/main/howto/initialize/
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_drivers/#storage-drivers
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_btrfs/
-incus admin init --preseed <<EOF
-storage_pools:
+# see https://linuxcontainers.org/incus/docs/main/reference/storage_zfs/
+if [ "$storage_driver" == "btrfs" ]; then
+  storage_pool_config="
   - name: default
     driver: btrfs
     config:
+      source: $storage_device"
+elif [ "$storage_driver" == "zfs" ]; then
+  storage_pool_config="
+  - name: default
+    driver: zfs
+    config:
       source: $storage_device
+      zfs.pool_name: incus"
+else
+  echo "unsupported storage driver: $storage_driver"
+  exit 1
+fi
+incus admin init --preseed <<EOF
+storage_pools:$storage_pool_config
 networks:
   - name: incusbr0
     type: bridge

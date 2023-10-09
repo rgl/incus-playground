@@ -45,9 +45,16 @@ incus exec debian-vm -- ps axw
 incus info
 incus list
 incus image list
-btrfs filesystem show
-btrfs filesystem df -h /var/lib/incus/storage-pools/default
-btrfs subvolume list -t /var/lib/incus/storage-pools/default
+if [ -n "$(incus storage info default | grep 'driver: btrfs')" ]; then
+    btrfs filesystem show
+    btrfs filesystem df -h /var/lib/incus/storage-pools/default
+    btrfs subvolume list -t /var/lib/incus/storage-pools/default
+fi
+if [ -n "$(incus storage info default | grep 'driver: zfs')" ]; then
+    zfs list
+    zfs get all incus/containers/debian-ct
+    zfs get all incus/virtual-machines/debian-vm
+fi
 nft list ruleset
 
 # stop and delete.
@@ -73,4 +80,9 @@ export GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN'
 * [Incus package repository](https://github.com/zabbly/incus)
 * [distrobuilder: System container and VM image builder for Incus and LXC](https://github.com/lxc/distrobuilder)
 * [Images for containers and virtual machines](https://images.linuxcontainers.org/)
-* [BTRFS](https://btrfs.readthedocs.io/en/latest/)
+* [BTRFS documentation](https://btrfs.readthedocs.io/en/latest/)
+* [BTRFS Incus storage driver](https://linuxcontainers.org/incus/docs/main/reference/storage_btrfs/)
+* [BTRFS Debian wiki](https://wiki.debian.org/Btrfs)
+* [ZFS Debian wiki](https://wiki.debian.org/ZFS)
+* [ZFS Incus storage driver](https://linuxcontainers.org/incus/docs/main/reference/storage_zfs/)
+* [ZFS repository](https://github.com/openzfs/zfs)
