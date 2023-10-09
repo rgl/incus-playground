@@ -27,6 +27,8 @@ Vagrant.configure("2") do |config|
       config.vm.synced_folder ".", "/vagrant", type: "nfs", nfs_version: "4.2", nfs_udp: false
     end
     config.vm.provision "shell", path: "provision-base.sh"
+    config.vm.provision "shell", path: "provision-systemd-networkd.sh"
+    config.vm.provision "reload"
     config.vm.provision "shell", path: "provision-incus.sh", args: [INCUS_VERSION, STORAGE_DRIVER]
   end
 end
