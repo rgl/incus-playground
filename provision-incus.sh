@@ -88,7 +88,7 @@ EOF
 echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/zabbly.gpg] https://pkgs.zabbly.com/incus/stable $(lsb_release -cs) main" >/etc/apt/sources.list.d/zabbly-incus.list
 apt-get update
 apt-cache madison incus
-incus_package_version="$(apt-cache madison incus | awk "/$incus_version/{print \$3}")"
+incus_package_version="$(apt-cache madison incus | awk "/$incus_version/{print \$3}" | head -1)"
 apt-get install -y "incus=$incus_package_version"
 
 # kick the tires.
