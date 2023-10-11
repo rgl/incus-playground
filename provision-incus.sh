@@ -89,7 +89,7 @@ echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/zabbly.gpg] https://pkgs.
 apt-get update
 apt-cache madison incus
 incus_package_version="$(apt-cache madison incus | awk "/$incus_version/{print \$3}" | head -1)"
-apt-get install -y "incus=$incus_package_version"
+apt-get install -y --no-install-recommends "incus=$incus_package_version"
 
 # kick the tires.
 incus version
