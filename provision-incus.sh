@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 # see https://github.com/lxc/incus/releases
-incus_version="${1:-0.3}"
+incus_version="${1:-0.4}"
 
 storage_driver="${2:-btrfs}"
 
