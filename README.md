@@ -6,6 +6,13 @@ My [Incus](https://github.com/lxc/incus) playground.
 
 Install the [Base Debian 12 Box](https://github.com/rgl/debian-vagrant).
 
+Add the following entries to your `hosts` file:
+
+```
+10.0.0.10 pandora.incus.test
+10.0.0.20 incus.test
+```
+
 Launch the environment:
 
 ```bash
@@ -63,6 +70,10 @@ incus stop debian-vm
 incus delete debian-ct
 incus delete debian-vm
 ```
+
+Access Incus at:
+
+https://incus.test:8443
 
 # Update dependencies
 

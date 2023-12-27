@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
+domain="$(hostname --fqdn)"
+
 # see https://github.com/lxc/incus/releases
 incus_version="${1:-0.4}"
 
@@ -96,9 +98,12 @@ incus version
 
 # configure.
 # see https://linuxcontainers.org/incus/docs/main/howto/initialize/
+# see https://linuxcontainers.org/incus/docs/main/howto/server_expose/
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_drivers/#storage-drivers
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_btrfs/
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_zfs/
+install -o root -g root -m 444 "/vagrant/shared/example-ca/$domain-crt.pem" /var/lib/incus/server.crt
+install -o root -g root -m 400 "/vagrant/shared/example-ca/$domain-key.pem" /var/lib/incus/server.key
 if [ "$storage_driver" == "btrfs" ]; then
   storage_pool_config="
   - name: default
@@ -117,6 +122,8 @@ else
   exit 1
 fi
 incus admin init --preseed <<EOF
+config:
+  core.https_address: :8443
 storage_pools:$storage_pool_config
 networks:
   - name: incusbr0
@@ -137,3 +144,9 @@ profiles:
         nictype: bridged
         parent: incusbr0
 EOF
+
+# show the tls certificate.
+openssl s_client -connect $domain:8443 -servername $domain </dev/null 2>/dev/null | openssl x509 -noout -text
+
+# show the configuration.
+incus config show
