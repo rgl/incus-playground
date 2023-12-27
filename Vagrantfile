@@ -8,6 +8,10 @@ ENV["VAGRANT_NO_PARALLEL"] = "yes"
 # renovate: datasource=github-releases depName=lxc/incus extractVersion=v(?<version>\d+\.\d+)(\.\d+)?
 INCUS_VERSION = "0.4"
 
+# see https://github.com/lxc/incus/releases
+# renovate: datasource=github-releases depName=lxc/incus
+INCUS_CLIENT_VERSION = "0.4.0"
+
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_drivers/#storage-drivers
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_btrfs/
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_zfs/
@@ -49,6 +53,9 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", path: "provision-certification-authority.sh"
     config.vm.provision "shell", path: "provision-certificate.sh", args: [PANDORA_FQDN]
     config.vm.provision "shell", path: "provision-certificate.sh", args: [INCUS_FQDN]
+    config.vm.provision "shell", path: "provision-terraform.sh"
+    config.vm.provision "shell", path: "keycloak/provision-keycloak.sh", args: [PANDORA_FQDN]
+    config.vm.provision "shell", path: "provision-incus-client.sh", args: [INCUS_CLIENT_VERSION]
   end
 
   config.vm.define :incus do |config|

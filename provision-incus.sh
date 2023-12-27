@@ -124,6 +124,8 @@ fi
 incus admin init --preseed <<EOF
 config:
   core.https_address: :8443
+  oidc.client.id: $(jq .client_id /vagrant/shared/keycloak-incus-oidc-client.json)
+  oidc.issuer: $(jq .issuer /vagrant/shared/keycloak-incus-oidc-configuration.json)
 storage_pools:$storage_pool_config
 networks:
   - name: incusbr0

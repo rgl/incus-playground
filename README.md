@@ -71,9 +71,30 @@ incus delete debian-ct
 incus delete debian-vm
 ```
 
+
+Access Keycloak at:
+
+https://pandora.incus.test:8443
+
 Access Incus at:
 
 https://incus.test:8443
+
+Test the OIDC authentication:
+
+```bash
+vagrant ssh pandora
+# login as alice:alice (as defined in keycloak/main.tf).
+incus remote add incus.test --auth-type oidc
+incus remote list
+incus info incus.test:
+incus launch images:debian/12 incus.test:debian-ct
+incus list incus.test:
+incus config show incus.test:debian-ct
+incus exec incus.test:debian-ct -- cat /etc/os-release
+incus stop incus.test:debian-ct
+incus delete incus.test:debian-ct
+```
 
 # Update dependencies
 

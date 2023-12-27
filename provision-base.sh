@@ -16,7 +16,10 @@ apt-get update
 #
 # install vim.
 
+apt-get install -y --no-install-recommends unzip
+apt-get install -y --no-install-recommends httpie
 apt-get install -y --no-install-recommends vim
+apt-get install -y --no-install-recommends jq
 
 cat >/etc/vim/vimrc.local <<'EOF'
 syntax on
