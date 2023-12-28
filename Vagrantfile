@@ -54,8 +54,12 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", path: "provision-certificate.sh", args: [PANDORA_FQDN]
     config.vm.provision "shell", path: "provision-certificate.sh", args: [INCUS_FQDN]
     config.vm.provision "shell", path: "provision-terraform.sh"
+    config.vm.provision "shell", path: "provision-postgresql.sh", args: [PANDORA_FQDN]
+    config.vm.provision "shell", path: "provision-openfga.sh", args: [PANDORA_FQDN]
+    config.vm.provision "shell", path: "provision-openfga-cli.sh", args: [PANDORA_FQDN]
     config.vm.provision "shell", path: "keycloak/provision-keycloak.sh", args: [PANDORA_FQDN]
     config.vm.provision "shell", path: "provision-incus-client.sh", args: [INCUS_CLIENT_VERSION]
+    config.vm.provision "shell", path: "provision-openfga-incus.sh"
   end
 
   config.vm.define :incus do |config|
@@ -73,6 +77,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", path: "provision-certification-authority.sh"
     config.vm.provision "shell", path: "provision-systemd-networkd.sh", args: [INCUS_IP_ADDRESS]
     config.vm.provision "reload"
-    config.vm.provision "shell", path: "provision-incus.sh", args: [INCUS_VERSION, INCUS_STORAGE_DRIVER]
+    config.vm.provision "shell", path: "provision-openfga-cli.sh", args: [PANDORA_FQDN]
+    config.vm.provision "shell", path: "provision-incus.sh", args: [PANDORA_FQDN, INCUS_FQDN, INCUS_VERSION, INCUS_STORAGE_DRIVER]
   end
 end

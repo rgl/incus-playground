@@ -2,6 +2,12 @@
 
 My [Incus](https://github.com/lxc/incus) playground.
 
+This will:
+
+* Install [Incus](https://github.com/lxc/incus).
+* Install [Keycloak](https://github.com/keycloak/keycloak) as the [Incus authentication provider](https://linuxcontainers.org/incus/docs/main/authentication/#authentication-openid) (a OpenID Connect (OIDC) provider).
+* Install [OpenFGA](https://github.com/openfga/openfga) as the [Incus authorization provider](https://linuxcontainers.org/incus/docs/main/authorization/#open-fine-grained-authorization-openfga).
+
 # Usage
 
 Install the [Base Debian 12 Box](https://github.com/rgl/debian-vagrant).
@@ -85,15 +91,32 @@ Test the OIDC authentication:
 ```bash
 vagrant ssh pandora
 # login as alice:alice (as defined in keycloak/main.tf).
+# NB you can manage your authentication at:
+#     https://pandora.incus.test:8443/realms/pandora/account
 incus remote add incus.test --auth-type oidc
 incus remote list
 incus info incus.test:
+incus info incus.test: | grep auth_ # check your user information.
 incus launch images:debian/12 incus.test:debian-ct
 incus list incus.test:
 incus config show incus.test:debian-ct
 incus exec incus.test:debian-ct -- cat /etc/os-release
 incus stop incus.test:debian-ct
 incus delete incus.test:debian-ct
+incus remote remove incus.test
+exit
+```
+
+Play with OpenFGA:
+
+```bash
+vagrant ssh pandora
+sudo -i
+export FGA_STORE_ID="$(jq -r .store.id /vagrant/shared/openfga-incus.json)"
+fga store list
+fga tuple read
+exit
+exit
 ```
 
 # Update dependencies
@@ -108,6 +131,10 @@ export GITHUB_COM_TOKEN='YOUR_GITHUB_PERSONAL_TOKEN'
 # References
 
 * [Incus documentation](https://linuxcontainers.org/incus/docs/main/)
+  * [Incus Authentication](https://linuxcontainers.org/incus/docs/main/authentication/#authentication-openid) (OpenID Connect (OIDC))
+    * [Keycloak](https://github.com/keycloak/keycloak)
+  * [Incus Authorization (OpenFGA)](https://linuxcontainers.org/incus/docs/main/authorization/#open-fine-grained-authorization-openfga)
+    * [OpenFGA](https://github.com/openfga/openfga)
 * [Incus repository](https://github.com/lxc/incus)
 * [Incus package repository](https://github.com/zabbly/incus)
 * [distrobuilder: System container and VM image builder for Incus and LXC](https://github.com/lxc/distrobuilder)

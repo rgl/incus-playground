@@ -1,13 +1,10 @@
 #!/bin/bash
 set -euxo pipefail
 
-domain="$(hostname --fqdn)"
-
-# see https://github.com/lxc/incus/releases
-incus_version="${1:-0.4}"
-
-storage_driver="${2:-btrfs}"
-
+openfga_domain="${1:-pandora.incus.test}"; shift || true
+domain="${1:-incus.test}"; shift || true
+incus_version="${1:-0.4}"; shift || true
+storage_driver="${1:-btrfs}"; shift || true
 storage_device='/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_incus'
 
 # install the storage dependencies.
@@ -102,6 +99,9 @@ incus version
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_drivers/#storage-drivers
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_btrfs/
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_zfs/
+# see https://linuxcontainers.org/incus/docs/main/authorization/#open-fine-grained-authorization-openfga
+# see https://linuxcontainers.org/incus/docs/main/server_config/#server-options-openfga
+# see Incus 0.3 OpenFGA demo at https://youtu.be/dcPBxavBJWQ?t=708
 install -o root -g root -m 444 "/vagrant/shared/example-ca/$domain-crt.pem" /var/lib/incus/server.crt
 install -o root -g root -m 400 "/vagrant/shared/example-ca/$domain-key.pem" /var/lib/incus/server.key
 if [ "$storage_driver" == "btrfs" ]; then
@@ -126,6 +126,11 @@ config:
   core.https_address: :8443
   oidc.client.id: $(jq .client_id /vagrant/shared/keycloak-incus-oidc-client.json)
   oidc.issuer: $(jq .issuer /vagrant/shared/keycloak-incus-oidc-configuration.json)
+  # TODO why using this here fails to initialize incus with the following?
+  #       incus: Error: Failed to create storage pool "default": Post "http://unix.socket/1.0/storage-pools": EOF
+  #openfga.api.url: https://$openfga_domain:8080
+  #openfga.api.token: abracadabra
+  #openfga.store.id: $(jq .store.id /vagrant/shared/openfga-incus.json)
 storage_pools:$storage_pool_config
 networks:
   - name: incusbr0
@@ -146,6 +151,21 @@ profiles:
         nictype: bridged
         parent: incusbr0
 EOF
+incus config set \
+  "openfga.api.url=https://$openfga_domain:8080" \
+  "openfga.api.token=abracadabra" \
+  "openfga.store.id=$(jq -r .store.id /vagrant/shared/openfga-incus.json)"
+
+# configure the authorization.
+export FGA_STORE_ID="$(jq -r .store.id /vagrant/shared/openfga-incus.json)"
+fga tuple write \
+  "user:alice@$openfga_domain" \
+  admin \
+  server:incus
+
+# show the configured users.
+fga tuple read \
+  | jq '.tuples[] | select(.key.user | match("^user:"))'
 
 # show the tls certificate.
 openssl s_client -connect $domain:8443 -servername $domain </dev/null 2>/dev/null | openssl x509 -noout -text
