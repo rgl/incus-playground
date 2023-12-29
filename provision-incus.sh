@@ -7,6 +7,9 @@ incus_version="${1:-0.4}"; shift || true
 storage_driver="${1:-btrfs}"; shift || true
 storage_device='/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_incus'
 
+# set to 1 to use --debug in incusd and incus admin init.
+INCUS_ENABLE_DEBUG='0'
+
 # install the storage dependencies.
 if [ "$storage_driver" == "btrfs" ]; then
   # see https://wiki.debian.org/Btrfs
@@ -90,6 +93,12 @@ apt-cache madison incus
 incus_package_version="$(apt-cache madison incus | awk "/$incus_version/{print \$3}" | head -1)"
 apt-get install -y --no-install-recommends "incus=$incus_package_version"
 
+# enable debug mode.
+if [ "$INCUS_ENABLE_DEBUG" == '1' ]; then
+  sed -i -E 's,^(INCUS_OPTS)=.*,\1="--debug",g' /etc/default/incus
+  systemctl restart incus
+fi
+
 # kick the tires.
 incus version
 
@@ -121,7 +130,7 @@ else
   echo "unsupported storage driver: $storage_driver"
   exit 1
 fi
-incus admin init --preseed <<EOF
+incus admin init $([ "$INCUS_ENABLE_DEBUG" == '1' ] && echo '--debug' || true) --preseed <<EOF
 config:
   core.https_address: :8443
   oidc.client.id: $(jq .client_id /vagrant/shared/keycloak-incus-oidc-client.json)
