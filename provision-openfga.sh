@@ -58,10 +58,10 @@ authn:
     keys:
       - abracadabra
 grpc:
-  addr: :8081
+  # TODO change this back to :8081 once https://github.com/openfga/openfga/issues/640 is fixed.
+  addr: $OPENFGA_FQDN:8081
   tls:
-    # TODO why enabling this makes openfga fail with the {"error": "context deadline exceeded"} error?
-    enabled: false
+    enabled: true
     key: /opt/openfga/$OPENFGA_FQDN-key.pem
     cert: /opt/openfga/$OPENFGA_FQDN-crt.pem
 http:
