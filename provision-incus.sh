@@ -128,6 +128,7 @@ config:
   oidc.issuer: $(jq .issuer /vagrant/shared/keycloak-incus-oidc-configuration.json)
   # TODO why using this here fails to initialize incus with the following?
   #       incus: Error: Failed to create storage pool "default": Post "http://unix.socket/1.0/storage-pools": EOF
+  #      see https://github.com/lxc/incus/issues/341
   #openfga.api.url: https://$openfga_domain:8080
   #openfga.api.token: abracadabra
   #openfga.store.id: $(jq .store.id /vagrant/shared/openfga-incus.json)
