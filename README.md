@@ -9,7 +9,15 @@ This will:
     * `foo`.
     * `bar`.
 * Install [Keycloak](https://github.com/keycloak/keycloak) as the [Incus authentication provider](https://linuxcontainers.org/incus/docs/main/authentication/#authentication-openid) (a OpenID Connect (OIDC) provider).
+  * Set up users:
+    * `alice`.
+    * `bob`.
 * Install [OpenFGA](https://github.com/openfga/openfga) as the [Incus authorization provider](https://linuxcontainers.org/incus/docs/main/authorization/#open-fine-grained-authorization-openfga).
+  * Set up user authorizations:
+    * For `alice`:
+      * Grant the `admin` role on the `incus` server.
+    * For `bob`:
+      * Grant the `operator` role on the `foo` project.
 
 # Usage
 
@@ -93,7 +101,11 @@ Test the OIDC authentication:
 
 ```bash
 vagrant ssh pandora
+# create the local client configuration directory.
+# NB workaround for https://github.com/lxc/incus/issues/345.
+install -d -m 700 .config{,/incus}
 # login as alice:alice (as defined in keycloak/main.tf).
+# then, repeat this whole section as bob:bob.
 # NB you can manage your authentication at:
 #     https://pandora.incus.test:8443/realms/pandora/account
 incus remote add incus.test --auth-type oidc

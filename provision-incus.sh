@@ -185,6 +185,10 @@ fga tuple write \
   "user:alice@$openfga_domain" \
   admin \
   server:incus
+fga tuple write \
+  "user:bob@$openfga_domain" \
+  operator \
+  project:foo
 
 # show the configured users.
 fga tuple read \

@@ -42,6 +42,22 @@ resource "keycloak_user" "alice" {
   }
 }
 
+# see https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs/resources/user
+resource "keycloak_user" "bob" {
+  realm_id       = keycloak_realm.pandora.id
+  username       = "bob"
+  email          = "bob@pandora.incus.test"
+  email_verified = true
+  first_name     = "Bob"
+  last_name      = "Doe"
+  // NB in a real program, omit this initial_password section and force a
+  //    password reset.
+  initial_password {
+    value     = "bob"
+    temporary = false
+  }
+}
+
 # see https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs/resources/openid_client
 resource "keycloak_openid_client" "incus" {
   realm_id                                  = keycloak_realm.pandora.id
