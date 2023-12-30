@@ -166,6 +166,19 @@ incus config set \
   "openfga.api.token=abracadabra" \
   "openfga.store.id=$(jq -r .store.id /vagrant/shared/openfga-incus.json)"
 
+# show the default profile.
+incus profile show default --project default
+
+# create the example projects (configured like the default profile).
+incus project create foo
+incus profile show default --project default \
+  | incus profile edit default --project foo
+incus profile show default --project foo
+incus project create bar
+incus profile show default --project default \
+  | incus profile edit default --project bar
+incus profile show default --project bar
+
 # configure the authorization.
 export FGA_STORE_ID="$(jq -r .store.id /vagrant/shared/openfga-incus.json)"
 fga tuple write \

@@ -5,6 +5,9 @@ My [Incus](https://github.com/lxc/incus) playground.
 This will:
 
 * Install [Incus](https://github.com/lxc/incus).
+  * Set up projects:
+    * `foo`.
+    * `bar`.
 * Install [Keycloak](https://github.com/keycloak/keycloak) as the [Incus authentication provider](https://linuxcontainers.org/incus/docs/main/authentication/#authentication-openid) (a OpenID Connect (OIDC) provider).
 * Install [OpenFGA](https://github.com/openfga/openfga) as the [Incus authorization provider](https://linuxcontainers.org/incus/docs/main/authorization/#open-fine-grained-authorization-openfga).
 
@@ -97,8 +100,10 @@ incus remote add incus.test --auth-type oidc
 incus remote list
 incus info incus.test:
 incus info incus.test: | grep auth_ # check your user information.
+incus project list incus.test:
 incus launch images:debian/12 incus.test:debian-ct
 incus list incus.test:
+incus list incus.test: --all-projects
 incus config show incus.test:debian-ct
 incus exec incus.test:debian-ct -- cat /etc/os-release
 incus stop incus.test:debian-ct
