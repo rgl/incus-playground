@@ -80,14 +80,14 @@ incus delete debian-ct
 incus delete debian-vm
 ```
 
-
 Access Keycloak at:
 
-https://pandora.incus.test:8443
+* https://pandora.incus.test:8443
+* https://pandora.incus.test:8443/realms/pandora/account
 
 Access Incus at:
 
-https://incus.test:8443
+* https://incus.test:8443
 
 Test the OIDC authentication:
 

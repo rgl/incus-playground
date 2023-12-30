@@ -107,6 +107,10 @@ Keycloak is available at:
 
     $base_url
 
+Keycloak user account console:
+
+    $base_url/realms/pandora/account
+
 Login as:
 
     admin
