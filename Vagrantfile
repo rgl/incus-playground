@@ -12,6 +12,11 @@ INCUS_VERSION = "0.4"
 # renovate: datasource=github-releases depName=lxc/incus
 INCUS_CLIENT_VERSION = "0.4.0"
 
+# see https://github.com/lxc/incus/releases
+# see https://github.com/zabbly/incus
+# see https://github.com/canonical/lxd-ui
+INCUS_UI_CANONICAL_VERSION = INCUS_VERSION
+
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_drivers/#storage-drivers
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_btrfs/
 # see https://linuxcontainers.org/incus/docs/main/reference/storage_zfs/
@@ -79,5 +84,6 @@ Vagrant.configure("2") do |config|
     config.vm.provision "reload"
     config.vm.provision "shell", path: "provision-openfga-cli.sh", args: [PANDORA_FQDN]
     config.vm.provision "shell", path: "provision-incus.sh", args: [PANDORA_FQDN, INCUS_FQDN, INCUS_VERSION, INCUS_STORAGE_DRIVER]
+    config.vm.provision "shell", path: "provision-incus-ui-canonical.sh", args: [PANDORA_FQDN, INCUS_FQDN, INCUS_UI_CANONICAL_VERSION]
   end
 end

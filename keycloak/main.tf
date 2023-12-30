@@ -65,6 +65,9 @@ resource "keycloak_openid_client" "incus" {
   client_id                                 = "incus"
   access_type                               = "PUBLIC"
   oauth2_device_authorization_grant_enabled = true
+  standard_flow_enabled                     = true
+  root_url                                  = "https://incus.test:8443"
+  valid_redirect_uris                       = ["/oidc/callback"]
 }
 
 # see https://developer.hashicorp.com/terraform/language/values/outputs
