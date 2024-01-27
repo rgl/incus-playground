@@ -34,6 +34,8 @@ EOF
 #
 # configure the shell.
 
+apt-get install -y --no-install-recommends bash-completion
+
 cat >/etc/profile.d/login.sh <<'EOF'
 export EDITOR=vim
 export PAGER=less
