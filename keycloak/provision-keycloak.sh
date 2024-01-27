@@ -6,7 +6,7 @@ base_url="https://$domain:8443"
 
 # see https://github.com/keycloak/keycloak/releases
 # renovate: datasource=github-releases depName=keycloak/keycloak
-keycloak_version='23.0.3'
+keycloak_version='23.0.4'
 
 # install dependencies.
 apt-get install -y unzip openjdk-17-jre-headless
