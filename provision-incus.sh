@@ -93,6 +93,9 @@ apt-cache madison incus
 incus_package_version="$(apt-cache madison incus | awk "/$incus_version/{print \$3}" | head -1)"
 apt-get install -y --no-install-recommends "incus=$incus_package_version"
 
+# install the bash completion script.
+incus completion bash >/usr/share/bash-completion/completions/incus
+
 # enable debug mode.
 if [ "$INCUS_ENABLE_DEBUG" == '1' ]; then
   sed -i -E 's,^(INCUS_OPTS)=.*,\1="--debug",g' /etc/default/incus

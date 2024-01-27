@@ -10,3 +10,6 @@ t="$(mktemp -q -d --suffix=.syft)"
 wget -qO "$t/incus" "$incus_url"
 install -m 755 "$t/incus" /usr/local/bin/
 rm -rf "$t"
+
+# install the bash completion script.
+incus completion bash >/usr/share/bash-completion/completions/incus
