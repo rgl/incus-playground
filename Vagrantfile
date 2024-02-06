@@ -10,7 +10,7 @@ INCUS_VERSION = "0.5"
 
 # see https://github.com/lxc/incus/releases
 # renovate: datasource=github-releases depName=lxc/incus
-INCUS_CLIENT_VERSION = "0.5.0"
+INCUS_CLIENT_VERSION = "0.5.1"
 
 # see https://github.com/lxc/incus/releases
 # see https://github.com/zabbly/incus
