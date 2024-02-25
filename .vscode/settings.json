@@ -3,6 +3,9 @@
         "BTRFS",
         "distrobuilder",
         "Keycloak",
+        "OIDC",
+        "openfga",
+        "ruleset",
         "subvolume"
     ]
 }
