@@ -138,12 +138,9 @@ config:
   core.https_address: :8443
   oidc.client.id: $(jq .client_id /vagrant/shared/keycloak-incus-oidc-client.json)
   oidc.issuer: $(jq .issuer /vagrant/shared/keycloak-incus-oidc-configuration.json)
-  # TODO why using this here fails to initialize incus with the following?
-  #       incus: Error: Failed to create storage pool "default": Post "http://unix.socket/1.0/storage-pools": EOF
-  #      see https://github.com/lxc/incus/issues/341
-  #openfga.api.url: https://$openfga_domain:8080
-  #openfga.api.token: abracadabra
-  #openfga.store.id: $(jq .store.id /vagrant/shared/openfga-incus.json)
+  openfga.api.url: https://$openfga_domain:8080
+  openfga.api.token: abracadabra
+  openfga.store.id: $(jq .store.id /vagrant/shared/openfga-incus.json)
 storage_pools:$storage_pool_config
 networks:
   - name: incusbr0
@@ -164,10 +161,6 @@ profiles:
         nictype: bridged
         parent: incusbr0
 EOF
-incus config set \
-  "openfga.api.url=https://$openfga_domain:8080" \
-  "openfga.api.token=abracadabra" \
-  "openfga.store.id=$(jq -r .store.id /vagrant/shared/openfga-incus.json)"
 
 # show the default profile.
 incus profile show default --project default
