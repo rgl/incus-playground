@@ -101,9 +101,6 @@ Test the OIDC authentication:
 
 ```bash
 vagrant ssh pandora
-# create the local client configuration directory.
-# NB workaround for https://github.com/lxc/incus/issues/345.
-install -d -m 700 .config{,/incus}
 # login as alice:alice (as defined in keycloak/main.tf).
 # then, repeat this whole section as bob:bob.
 # NB you can manage your authentication at:
