@@ -45,7 +45,7 @@ vagrant ssh incus
 # switch to root.
 sudo -i
 
-# run a container.
+# run a system container.
 incus launch images:debian/12 debian-ct
 incus info debian-ct
 incus config show debian-ct
@@ -54,6 +54,18 @@ incus exec debian-ct -- ip addr
 incus exec debian-ct -- mount
 incus exec debian-ct -- df -h
 incus exec debian-ct -- ps axw
+
+# run a application container.
+incus remote add docker https://docker.io --protocol oci
+incus launch docker:debian:12-slim debian-app-ct
+incus info debian-app-ct
+incus config show debian-app-ct
+incus exec debian-app-ct -- bash -c 'apt-get update && apt-get install -y iproute2 procps'
+incus exec debian-app-ct -- cat /etc/os-release
+incus exec debian-app-ct -- ip addr
+incus exec debian-app-ct -- mount
+incus exec debian-app-ct -- df -h
+incus exec debian-app-ct -- ps axw
 
 # run a virtual machine.
 incus launch images:debian/12 debian-vm --vm
@@ -83,8 +95,10 @@ nft list ruleset
 
 # stop and delete.
 incus stop debian-ct
+incus stop debian-app-ct
 incus stop debian-vm
 incus delete debian-ct
+incus delete debian-app-ct
 incus delete debian-vm
 ```
 

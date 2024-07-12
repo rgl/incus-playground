@@ -5,6 +5,7 @@
         "Keycloak",
         "OIDC",
         "openfga",
+        "procps",
         "ruleset",
         "subvolume"
     ]
