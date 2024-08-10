@@ -3,7 +3,7 @@ set -euxo pipefail
 
 auth_domain="${1:-pandora.incus.test}"; shift || true
 domain="${1:-incus.test}"; shift || true
-incus_ui_canonical_version="${1:-6.3}"; shift || true
+incus_ui_canonical_version="${1:-6.4}"; shift || true
 auth_base_url="https://$auth_domain:8443"
 base_url="https://$domain:8443"
 
