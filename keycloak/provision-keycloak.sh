@@ -6,7 +6,7 @@ base_url="https://$domain:8443"
 
 # see https://github.com/keycloak/keycloak/releases
 # renovate: datasource=github-releases depName=keycloak/keycloak
-keycloak_version='25.0.6'
+keycloak_version='26.0.5'
 
 # install dependencies.
 apt-get install -y unzip openjdk-17-jre-headless
@@ -62,8 +62,8 @@ After=network.service
 Type=simple
 User=keycloak
 Group=keycloak
-Environment=KEYCLOAK_ADMIN=admin
-Environment=KEYCLOAK_ADMIN_PASSWORD=admin
+Environment=KC_BOOTSTRAP_ADMIN_USERNAME=admin
+Environment=KC_BOOTSTRAP_ADMIN_PASSWORD=admin
 ExecStart=/opt/keycloak/bin/kc.sh start --optimized
 WorkingDirectory=/opt/keycloak
 Restart=on-abort
