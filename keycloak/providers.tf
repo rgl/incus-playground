@@ -2,11 +2,11 @@
 terraform {
   required_version = "1.10.5"
   required_providers {
-    # see https://github.com/mrparkers/terraform-provider-keycloak
-    # see https://registry.terraform.io/providers/mrparkers/keycloak
+    # see https://github.com/keycloak/terraform-provider-keycloak
+    # see https://registry.terraform.io/providers/keycloak/keycloak
     keycloak = {
-      source  = "mrparkers/keycloak"
-      version = "4.4.0"
+      source  = "keycloak/keycloak"
+      version = "5.1.0"
     }
   }
   backend "local" {

@@ -1,4 +1,4 @@
-# see https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs/resources/realm
+# see https://registry.terraform.io/providers/keycloak/keycloak/latest/docs/resources/realm
 resource "keycloak_realm" "pandora" {
   realm                    = "pandora"
   verify_email             = true
@@ -11,13 +11,13 @@ resource "keycloak_realm" "pandora" {
   }
 }
 
-# see https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs/resources/group
+# see https://registry.terraform.io/providers/keycloak/keycloak/latest/docs/resources/group
 resource "keycloak_group" "administrators" {
   realm_id = keycloak_realm.pandora.id
   name     = "administrators"
 }
 
-# see https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs/resources/group_memberships
+# see https://registry.terraform.io/providers/keycloak/keycloak/latest/docs/resources/group_memberships
 resource "keycloak_group_memberships" "administrators" {
   realm_id = keycloak_realm.pandora.id
   group_id = keycloak_group.administrators.id
@@ -26,7 +26,7 @@ resource "keycloak_group_memberships" "administrators" {
   ]
 }
 
-# see https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs/resources/user
+# see https://registry.terraform.io/providers/keycloak/keycloak/latest/docs/resources/user
 resource "keycloak_user" "alice" {
   realm_id       = keycloak_realm.pandora.id
   username       = "alice"
@@ -42,7 +42,7 @@ resource "keycloak_user" "alice" {
   }
 }
 
-# see https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs/resources/user
+# see https://registry.terraform.io/providers/keycloak/keycloak/latest/docs/resources/user
 resource "keycloak_user" "bob" {
   realm_id       = keycloak_realm.pandora.id
   username       = "bob"
@@ -58,7 +58,7 @@ resource "keycloak_user" "bob" {
   }
 }
 
-# see https://registry.terraform.io/providers/mrparkers/keycloak/latest/docs/resources/openid_client
+# see https://registry.terraform.io/providers/keycloak/keycloak/latest/docs/resources/openid_client
 resource "keycloak_openid_client" "incus" {
   realm_id                                  = keycloak_realm.pandora.id
   description                               = "Incus"
