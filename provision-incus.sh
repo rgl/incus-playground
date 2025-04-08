@@ -3,7 +3,7 @@ set -euxo pipefail
 
 openfga_domain="${1:-pandora.incus.test}"; shift || true
 domain="${1:-incus.test}"; shift || true
-incus_version="${1:-6.10}"; shift || true
+incus_version="${1:-6.11}"; shift || true
 storage_driver="${1:-btrfs}"; shift || true
 storage_device='/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_incus'
 
@@ -169,7 +169,7 @@ EOF
 incus profile show default --project default
 
 # create the example projects (configured like the default profile).
-# see ProjectPut at https://github.com/lxc/incus/blob/v6.10.1/shared/api/project.go#L30-L43
+# see ProjectPut at https://github.com/lxc/incus/blob/v6.11.0/shared/api/project.go#L30-L43
 incus project create foo <<'EOF'
 description: Example Foo
 EOF
