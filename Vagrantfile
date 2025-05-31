@@ -6,11 +6,11 @@ ENV["VAGRANT_NO_PARALLEL"] = "yes"
 #    component version here.
 #    see https://github.com/lxc/incus/issues/240#issuecomment-1853333228
 # renovate: datasource=github-releases depName=lxc/incus extractVersion=v(?<version>\d+\.\d+)(\.\d+)?
-INCUS_VERSION = "6.12"
+INCUS_VERSION = "6.13"
 
 # see https://github.com/lxc/incus/releases
 # renovate: datasource=github-releases depName=lxc/incus
-INCUS_CLIENT_VERSION = "6.12.0"
+INCUS_CLIENT_VERSION = "6.13.0"
 
 # see https://github.com/lxc/incus/releases
 # see https://github.com/zabbly/incus
