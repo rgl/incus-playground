@@ -21,7 +21,7 @@ This will:
 
 # Usage
 
-Install the [Base Debian 12 Box](https://github.com/rgl/debian-vagrant).
+Install the [Base Debian 12 UEFI Box](https://github.com/rgl/debian-vagrant).
 
 Add the following entries to your `hosts` file:
 
