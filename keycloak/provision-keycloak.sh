@@ -6,7 +6,7 @@ base_url="https://$domain:8443"
 
 # see https://github.com/keycloak/keycloak/releases
 # renovate: datasource=github-releases depName=keycloak/keycloak
-keycloak_version='26.2.5'
+keycloak_version='26.3.1'
 
 # install dependencies.
 apt-get install -y unzip openjdk-17-jre-headless
@@ -39,6 +39,7 @@ rm -rf "$t"
 # see https://www.keycloak.org/server/configuration-production
 mv /opt/keycloak/conf/keycloak{,.orig}.conf
 cat >/opt/keycloak/conf/keycloak.conf <<EOF
+db=dev-file
 hostname=$domain
 https-certificate-file=\${kc.home.dir}/conf/$domain-crt.pem
 https-certificate-key-file=\${kc.home.dir}/conf/$domain-key.pem
