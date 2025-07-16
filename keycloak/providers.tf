@@ -1,6 +1,6 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.12.1"
+  required_version = "1.12.2"
   required_providers {
     # see https://github.com/keycloak/terraform-provider-keycloak
     # see https://registry.terraform.io/providers/keycloak/keycloak
