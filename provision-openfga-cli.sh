@@ -5,7 +5,7 @@ OPENFGA_FQDN="${1}"
 
 # see https://github.com/openfga/cli/releases
 # renovate: datasource=github-releases depName=openfga/cli
-openfga_cli_version='0.6.6'
+openfga_cli_version='0.7.2'
 
 # download and install the fga cli.
 # see https://github.com/openfga/cli/releases
