@@ -3,7 +3,7 @@ set -euxo pipefail
 
 openfga_domain="${1:-pandora.incus.test}"; shift || true
 domain="${1:-incus.test}"; shift || true
-incus_version="${1:-6.13}"; shift || true
+incus_version="${1:-6.14}"; shift || true
 storage_driver="${1:-btrfs}"; shift || true
 storage_device='/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_incus'
 
@@ -20,7 +20,7 @@ elif [ "$storage_driver" == "zfs" ]; then
   sed -i -E 's,^(deb(-src)? .+),\1 contrib,g' /etc/apt/sources.list
   apt-get update
   # configure the system to accept the zfs incompatible licenses.
-  # these anwsers were obtained (after installing zfs-dkms) with:
+  # these answers were obtained (after installing zfs-dkms) with:
   #   #sudo debconf-show zfs-dkms
   #   sudo apt-get install debconf-utils
   #   # this way you can see the comments:
@@ -169,7 +169,7 @@ EOF
 incus profile show default --project default
 
 # create the example projects (configured like the default profile).
-# see ProjectPut at https://github.com/lxc/incus/blob/v6.13.0/shared/api/project.go#L30-L43
+# see ProjectPut at https://github.com/lxc/incus/blob/v6.14.0/shared/api/project.go#L30-L43
 incus project create foo <<'EOF'
 description: Example Foo
 EOF
