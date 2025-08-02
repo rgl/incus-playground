@@ -6,7 +6,7 @@ terraform {
     # see https://registry.terraform.io/providers/keycloak/keycloak
     keycloak = {
       source  = "keycloak/keycloak"
-      version = "5.3.0"
+      version = "5.4.0"
     }
   }
   backend "local" {
