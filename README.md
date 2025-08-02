@@ -147,6 +147,12 @@ exit
 exit
 ```
 
+Destroy the environment:
+
+```bash
+vagrant destroy -f
+```
+
 # Update dependencies
 
 List this repository dependencies (and which have newer versions):
