@@ -41,9 +41,9 @@ fi
 # see https://github.com/zabbly/incus#stable-repository
 # see https://github.com/zabbly/incus#repository-key
 # see https://wiki.debian.org/DebianRepository/Format
-# see Debian Bookworkm 12: https://pkgs.zabbly.com/incus/stable/dists/bookworm/Release
-# see Debian Bookworkm 12: https://pkgs.zabbly.com/incus/stable/dists/bookworm/main/binary-amd64/Packages
-apt-get install -y apt-transport-https software-properties-common
+# see Debian Trixie 13: https://pkgs.zabbly.com/incus/stable/dists/trixie/Release
+# see Debian Trixie 13: https://pkgs.zabbly.com/incus/stable/dists/trixie/main/binary-amd64/Packages
+apt-get install -y apt-transport-https gpg
 gpg --dearmor >/etc/apt/trusted.gpg.d/zabbly.gpg <<'EOF'
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 

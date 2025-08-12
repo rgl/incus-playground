@@ -7,6 +7,7 @@
         "openfga",
         "procps",
         "ruleset",
-        "subvolume"
+        "subvolume",
+        "trixie"
     ]
 }

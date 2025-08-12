@@ -21,7 +21,7 @@ This will:
 
 # Usage
 
-Install the [Base Debian 12 UEFI Box](https://github.com/rgl/debian-vagrant).
+Install the [Base Debian 13 UEFI Box](https://github.com/rgl/debian-vagrant).
 
 Add the following entries to your `hosts` file:
 
@@ -46,7 +46,7 @@ vagrant ssh incus
 sudo -i
 
 # run a system container.
-incus launch images:debian/12 debian-ct
+incus launch images:debian/trixie debian-ct
 incus info debian-ct
 incus config show debian-ct
 incus exec debian-ct -- cat /etc/os-release
@@ -57,7 +57,7 @@ incus exec debian-ct -- ps axw
 
 # run a application container.
 incus remote add docker https://docker.io --protocol oci
-incus launch docker:debian:12-slim debian-app-ct
+incus launch docker:debian:trixie-slim debian-app-ct
 incus info debian-app-ct
 incus config show debian-app-ct
 incus exec debian-app-ct -- bash -c 'apt-get update && apt-get install -y iproute2 procps'
@@ -68,7 +68,7 @@ incus exec debian-app-ct -- df -h
 incus exec debian-app-ct -- ps axw
 
 # run a virtual machine.
-incus launch images:debian/12 debian-vm --vm
+incus launch images:debian/trixie debian-vm --vm
 incus info debian-vm
 incus config show debian-vm
 incus exec debian-vm -- cat /etc/os-release
@@ -124,7 +124,7 @@ incus remote list
 incus info incus.test:
 incus info incus.test: | grep auth_ # check your user information.
 incus project list incus.test:
-incus launch images:debian/12 incus.test:debian-ct
+incus launch images:debian/trixie incus.test:debian-ct
 incus list incus.test:
 incus list incus.test: --all-projects
 incus config show incus.test:debian-ct

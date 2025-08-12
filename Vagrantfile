@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :pandora do |config|
-    config.vm.box = "debian-12-uefi-amd64"
+    config.vm.box = "debian-13-uefi-amd64"
     config.vm.hostname = PANDORA_FQDN
     config.vm.provider "libvirt" do |lv, config|
       lv.cpus = PANDORA_VM_CPUS
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define :incus do |config|
-    config.vm.box = "debian-12-uefi-amd64"
+    config.vm.box = "debian-13-uefi-amd64"
     config.vm.hostname = INCUS_FQDN
     config.vm.provider "libvirt" do |lv, config|
       lv.cpus = INCUS_VM_CPUS

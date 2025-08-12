@@ -9,7 +9,7 @@ base_url="https://$domain:8443"
 keycloak_version='26.3.2'
 
 # install dependencies.
-apt-get install -y unzip openjdk-17-jre-headless
+apt-get install -y unzip openjdk-21-jre-headless
 
 # create the keycloak system user.
 groupadd --system keycloak
