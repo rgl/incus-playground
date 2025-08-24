@@ -16,8 +16,9 @@ gitea_container_name="$(basename "$(dirname "$(realpath "${BASH_SOURCE[0]}")")")
 gitea_version='1.24.4'
 
 # see https://hub.docker.com/r/renovate/renovate/tags
+# see https://github.com/renovatebot/renovate/releases
 # renovate: datasource=docker depName=renovate/renovate
-renovate_version='41.62.1'
+renovate_version='41.82.8'
 
 # clean.
 echo 'Deleting existing Gitea...'
