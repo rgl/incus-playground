@@ -6,7 +6,7 @@ OPENFGA_FQDN="${1}"
 
 # see https://github.com/openfga/openfga/releases
 # renovate: datasource=github-releases depName=openfga/openfga
-openfga_version='1.9.2'
+openfga_version='1.9.5'
 
 # create the openfga system user.
 groupadd --system openfga
@@ -43,8 +43,8 @@ popd
 
 # configure.
 # see https://openfga.dev/docs/getting-started/setup-openfga/configure-openfga
-# see Config at https://github.com/openfga/openfga/blob/v1.9.2/pkg/server/config/config.go#L292
-# see DefaultConfig at https://github.com/openfga/openfga/blob/v1.9.2/pkg/server/config/config.go#L675
+# see Config at https://github.com/openfga/openfga/blob/v1.9.5/pkg/server/config/config.go#L293
+# see DefaultConfig at https://github.com/openfga/openfga/blob/v1.9.5/pkg/server/config/config.go#L676
 cat >/opt/openfga/config.yaml <<EOF
 log:
   format: text
