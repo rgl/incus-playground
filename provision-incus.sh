@@ -3,7 +3,7 @@ set -euxo pipefail
 
 openfga_domain="${1:-pandora.incus.test}"; shift || true
 domain="${1:-incus.test}"; shift || true
-incus_version="${1:-6.19}"; shift || true
+incus_version="${1:-6.19.1}"; shift || true
 storage_driver="${1:-btrfs}"; shift || true
 storage_device='/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_incus'
 
