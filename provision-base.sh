@@ -2,6 +2,15 @@
 set -euxo pipefail
 
 
+#
+# set the apt mirror.
+
+sed -i -E 's,ftp\..+\.debian\.org,ftp.pt.debian.org,g' /etc/apt/sources.list
+
+
+#
+# configure apt to be non-interactive.
+
 echo 'Defaults env_keep += "DEBIAN_FRONTEND"' >/etc/sudoers.d/env_keep_apt
 chmod 440 /etc/sudoers.d/env_keep_apt
 export DEBIAN_FRONTEND=noninteractive
