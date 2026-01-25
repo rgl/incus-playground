@@ -71,6 +71,8 @@ incus exec debian-app-ct -- ps axw
 incus launch images:debian/trixie debian-vm --vm
 incus info debian-vm
 incus config show debian-vm
+incus wait debian-vm agent
+incus wait debian-vm ip
 incus exec debian-vm -- cat /etc/os-release
 incus exec debian-vm -- ip addr
 incus exec debian-vm -- mount
