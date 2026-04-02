@@ -104,14 +104,20 @@ incus delete debian-app-ct
 incus delete debian-vm
 ```
 
-Access Keycloak at:
+Access the `master` and `pandora` Keycloak Realm as `admin`:`admin` at:
 
 * https://pandora.incus.test:8443
 * https://pandora.incus.test:8443/realms/pandora/account
 
-Access Incus at:
+Access the `pandora` Keycloak Realm as `alice`:`alice` (or as `bob`:`bob`) at:
+
+* https://pandora.incus.test:8443/realms/pandora/account
+
+Access Incus as `alice`:`alice` (or as `bob`:`bob`) at:
 
 * https://incus.test:8443
+
+**NB** Incus is configured to use the `pandora` Keycloak Realm.
 
 Test the OIDC authentication:
 
