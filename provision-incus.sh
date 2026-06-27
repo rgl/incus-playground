@@ -87,7 +87,14 @@ ZBqN6R8SuRc5NWWPDcSdr1myXY2YpB0AVEV8zGtF
 =tHYp
 -----END PGP PUBLIC KEY BLOCK-----
 EOF
-echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/zabbly.gpg] https://pkgs.zabbly.com/incus/stable $(lsb_release -cs) main" >/etc/apt/sources.list.d/zabbly-incus.list
+cat >/etc/apt/sources.list.d/zabbly-incus.sources <<EOF
+Types: deb
+URIs: https://pkgs.zabbly.com/incus/stable
+Suites: $(lsb_release -cs)
+Components: main
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/trusted.gpg.d/zabbly.gpg
+EOF
 apt-get update
 apt-cache madison incus
 incus_package_version="$(apt-cache madison incus | awk "/$incus_version/{print \$3}" | head -1)"
