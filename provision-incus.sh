@@ -3,7 +3,7 @@ set -euxo pipefail
 
 openfga_domain="${1:-pandora.incus.test}"; shift || true
 domain="${1:-incus.test}"; shift || true
-incus_version="${1:-7.2}"; shift || true
+incus_version="${1:-7.4}"; shift || true
 storage_driver="${1:-btrfs}"; shift || true
 storage_device='/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_incus'
 
@@ -148,9 +148,9 @@ config:
   core.https_address: :8443
   oidc.client.id: $(jq .client_id /vagrant/shared/keycloak-incus-oidc-client.json)
   oidc.issuer: $(jq .issuer /vagrant/shared/keycloak-incus-oidc-configuration.json)
-  openfga.api.url: https://$openfga_domain:8080
-  openfga.api.token: abracadabra
-  openfga.store.id: $(jq .store.id /vagrant/shared/openfga-incus.json)
+  authorization.openfga.api.url: https://$openfga_domain:8080
+  authorization.openfga.api.token: abracadabra
+  authorization.openfga.store.id: $(jq .store.id /vagrant/shared/openfga-incus.json)
 storage_pools:$storage_pool_config
 networks:
   - name: incusbr0

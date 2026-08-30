@@ -78,6 +78,9 @@ incus exec debian-vm -- ip addr
 incus exec debian-vm -- mount
 incus exec debian-vm -- df -h
 incus exec debian-vm -- ps axw
+incus low-level nvram list debian-vm
+incus low-level nvram get debian-vm BootOrder
+incus low-level nvram get debian-vm Boot0000
 
 # show information.
 incus info
