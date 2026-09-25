@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 # see https://github.com/lxc/incus/releases
-incus_client_version="${1:-7.4.0}"
+incus_client_version="${1:-7.5.1}"
 
 # download and install.
 incus_url="https://github.com/lxc/incus/releases/download/v${incus_client_version}/bin.linux.incus.x86_64"
