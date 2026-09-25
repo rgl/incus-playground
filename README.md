@@ -53,7 +53,7 @@ incus exec debian-ct -- cat /etc/os-release
 incus exec debian-ct -- ip addr
 incus exec debian-ct -- mount
 incus exec debian-ct -- df -h
-incus exec debian-ct -- ps axw
+incus exec debian-ct -- ps -efww --forest
 
 # run a application container.
 incus remote add docker https://docker.io --protocol oci
@@ -65,7 +65,7 @@ incus exec debian-app-ct -- cat /etc/os-release
 incus exec debian-app-ct -- ip addr
 incus exec debian-app-ct -- mount
 incus exec debian-app-ct -- df -h
-incus exec debian-app-ct -- ps axw
+incus exec debian-app-ct -- ps -efww --forest
 
 # run a virtual machine.
 incus launch images:debian/trixie debian-vm --vm
@@ -77,7 +77,7 @@ incus exec debian-vm -- cat /etc/os-release
 incus exec debian-vm -- ip addr
 incus exec debian-vm -- mount
 incus exec debian-vm -- df -h
-incus exec debian-vm -- ps axw
+incus exec debian-vm -- ps -efww --forest
 incus low-level nvram list debian-vm
 incus low-level nvram get debian-vm BootOrder
 incus low-level nvram get debian-vm Boot0000
